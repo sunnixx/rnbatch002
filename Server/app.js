@@ -27,9 +27,9 @@ app.post('/login',(request,response,done) => {
 
     User.find({"username" : username,"password" : password},(err,user) => {
         if(user.length <= 0) {
-            response.json({"msg" : "user not found"})
+            response.json({isLogged: false, "msg" : "user not found"})
         } else {
-            response.json({"msg" : "user has been logged succuessfully"})
+            response.json({user:user, isLogged: true});
         }
 
         if(err) {

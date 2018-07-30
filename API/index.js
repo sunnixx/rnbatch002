@@ -1,3 +1,5 @@
+import {AsyncStorage} from 'react-native';
+
 const app = {};
 
 app.sendData = async function(data) {
@@ -27,7 +29,13 @@ app.login = async function(data) {
         })
     }).then(response => {
         response.json().then(message => {
-            alert(message.msg);
+            if(message.isLogged === false) {
+                alert(message.msg);
+                return;
+            } else if(message.isLogged === true){
+                AsyncStorage.setItem('@key:user',JSON.stringify(message.user));
+                return;
+            }
         })
     }).catch(err => {throw err})
 }
